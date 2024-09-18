@@ -14,29 +14,66 @@ public class Player : MonoBehaviour
     public bool moveUp = false;
     public bool moveRight = false;
     public bool moveDown = false;
-    public float velocity = 0.03f;
+    public float acceleration = 0f;
+    public bool keyLetGo = false;
 
    
     void Update()
     {
-
+        print(acceleration);
         Vector3 offset = Vector3.zero;
+        if (keyLetGo == false && acceleration<10)
+        {
+            acceleration += acceleration * Time.deltaTime;
 
+        }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            offset += Vector3.left * velocity;
+            keyLetGo = false;
+
+            
+            offset += Vector3.left * acceleration * Time.deltaTime;
+
+            
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            offset += Vector3.right * velocity;
+            keyLetGo = false;
+
+            
+            offset += Vector3.right * acceleration * Time.deltaTime; ;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            offset += Vector3.up * velocity;
+            keyLetGo = false;
+
+          
+            offset += Vector3.up *acceleration * Time.deltaTime;
         }
         if(Input.GetKey(KeyCode.DownArrow)) 
         {
-            offset += Vector3.down * velocity; 
+            keyLetGo = false;
+            
+            offset += Vector3.down * acceleration * Time.deltaTime;
+            
+
+        }
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+
+            keyLetGo = true;
+        }
+
+        if (keyLetGo == true && acceleration>3)
+        {
+            if (acceleration > 0)
+            {
+               
+                acceleration-= acceleration * Time.deltaTime;
+               // offset += Vector3.zero * acceleration * Time.deltaTime;
+               // transform.position += transform.position * acceleration * Time.deltaTime;
+            }
+
         }
         PlayerMovement1(offset);
 
@@ -101,5 +138,7 @@ public class Player : MonoBehaviour
     public void PlayerMovement1(Vector3 offset)
     {
         transform.position += offset;
+
+
     }
 }
