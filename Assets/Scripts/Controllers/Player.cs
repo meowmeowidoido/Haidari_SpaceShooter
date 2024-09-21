@@ -14,8 +14,12 @@ public class Player : MonoBehaviour
     public bool moveUp = false;
     public bool moveRight = false;
     public bool moveDown = false;
-    public float acceleration = 0f;
+    public float acceleration = 2f;
     public bool keyLetGo = false;
+   public bool keyUp1 = false;
+    public bool keyDown2 = false;
+    public bool keyLeft3 = false;
+    public bool keyRight4 = false;
 
    
     void Update()
@@ -24,13 +28,17 @@ public class Player : MonoBehaviour
         Vector3 offset = Vector3.zero;
         if (keyLetGo == false && acceleration<10)
         {
+            keyDown2 = false;
+            keyRight4 = false;
+            keyUp1 = false;
+            keyLeft3 = false;
             acceleration += acceleration * Time.deltaTime;
 
         }
+        
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             keyLetGo = false;
-
             
             offset += Vector3.left * acceleration * Time.deltaTime;
 
@@ -39,42 +47,93 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             keyLetGo = false;
-
             
             offset += Vector3.right * acceleration * Time.deltaTime; ;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
             keyLetGo = false;
-
           
             offset += Vector3.up *acceleration * Time.deltaTime;
         }
         if(Input.GetKey(KeyCode.DownArrow)) 
         {
             keyLetGo = false;
-            
             offset += Vector3.down * acceleration * Time.deltaTime;
             
 
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.RightArrow))
-        {
 
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
             keyLetGo = true;
+            keyLeft3 = true;
         }
 
-        if (keyLetGo == true && acceleration>3)
+        if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            if (acceleration > 0)
+            keyLetGo = true;
+
+            keyRight4 = true;
+  
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            keyLetGo = true;
+            keyUp1 = true;
+            
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            keyLetGo = true;
+            keyDown2 = true;
+        }
+
+        if (keyRight4 == true)
+        {
+            if (acceleration > 2)
             {
-               
-                acceleration-= acceleration * Time.deltaTime;
-               // offset += Vector3.zero * acceleration * Time.deltaTime;
-               // transform.position += transform.position * acceleration * Time.deltaTime;
+                acceleration -= acceleration * Time.deltaTime;
+                transform.position += Vector3.right * acceleration * Time.deltaTime;
+            }
+        }
+        if(keyLeft3==true)
+        {
+            if (acceleration > 2)
+            {
+                acceleration -= acceleration * Time.deltaTime;
+                transform.position += Vector3.left * acceleration * Time.deltaTime;
+            }
+        }
+        if(keyDown2 == true)
+        {
+            if (acceleration > 2)
+            {
+                acceleration -= acceleration * Time.deltaTime;
+                transform.position += Vector3.down * acceleration * Time.deltaTime;
+            }
+        }
+        if(keyUp1 == true)
+        {
+            if (acceleration > 2)
+            {
+                acceleration -= acceleration * Time.deltaTime;
+                transform.position += Vector3.up * acceleration * Time.deltaTime;
             }
 
         }
+        /*   if (keyLetGo == true && acceleration>3)
+            {
+
+                    acceleration-= acceleration * Time.deltaTime;
+                   offset += transform.position * acceleration * Time.deltaTime;
+
+                   transform.position  += offset* acceleration * Time.deltaTime;
+
+
+            }*/
+
         PlayerMovement1(offset);
 
         //Own Solution
