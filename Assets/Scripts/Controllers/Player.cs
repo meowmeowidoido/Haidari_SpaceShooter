@@ -10,23 +10,22 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
-    public bool moveLeft=false;
-    public bool moveUp = false;
-    public bool moveRight = false;
-    public bool moveDown = false;
+    /* public bool moveLeft=false;
+     public bool moveUp = false;
+     public bool moveRight = false;
+     public bool moveDown = false;*/
     public float acceleration = 2f;
     public bool keyLetGo = false;
-   public bool keyUp1 = false;
+    public bool keyUp1 = false;
     public bool keyDown2 = false;
     public bool keyLeft3 = false;
     public bool keyRight4 = false;
 
-   
+
     void Update()
     {
-        print(acceleration);
         Vector3 offset = Vector3.zero;
-        if (keyLetGo == false && acceleration<10)
+        if (keyLetGo == false && acceleration < 10)
         {
             keyDown2 = false;
             keyRight4 = false;
@@ -35,32 +34,32 @@ public class Player : MonoBehaviour
             acceleration += acceleration * Time.deltaTime;
 
         }
-        
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             keyLetGo = false;
-            
+
             offset += Vector3.left * acceleration * Time.deltaTime;
 
-            
+
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
             keyLetGo = false;
-            
+
             offset += Vector3.right * acceleration * Time.deltaTime; ;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
             keyLetGo = false;
-          
-            offset += Vector3.up *acceleration * Time.deltaTime;
+
+            offset += Vector3.up * acceleration * Time.deltaTime;
         }
-        if(Input.GetKey(KeyCode.DownArrow)) 
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             keyLetGo = false;
             offset += Vector3.down * acceleration * Time.deltaTime;
-            
+
 
         }
 
@@ -76,13 +75,13 @@ public class Player : MonoBehaviour
             keyLetGo = true;
 
             keyRight4 = true;
-  
+
         }
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
             keyLetGo = true;
             keyUp1 = true;
-            
+
         }
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
@@ -98,7 +97,7 @@ public class Player : MonoBehaviour
                 transform.position += Vector3.right * acceleration * Time.deltaTime;
             }
         }
-        if(keyLeft3==true)
+        if (keyLeft3 == true)
         {
             if (acceleration > 2)
             {
@@ -106,7 +105,7 @@ public class Player : MonoBehaviour
                 transform.position += Vector3.left * acceleration * Time.deltaTime;
             }
         }
-        if(keyDown2 == true)
+        if (keyDown2 == true)
         {
             if (acceleration > 2)
             {
@@ -114,7 +113,7 @@ public class Player : MonoBehaviour
                 transform.position += Vector3.down * acceleration * Time.deltaTime;
             }
         }
-        if(keyUp1 == true)
+        if (keyUp1 == true)
         {
             if (acceleration > 2)
             {
@@ -123,18 +122,9 @@ public class Player : MonoBehaviour
             }
 
         }
-        /*   if (keyLetGo == true && acceleration>3)
-            {
-
-                    acceleration-= acceleration * Time.deltaTime;
-                   offset += transform.position * acceleration * Time.deltaTime;
-
-                   transform.position  += offset* acceleration * Time.deltaTime;
-
-
-            }*/
 
         PlayerMovement1(offset);
+        EnemyMovement();
 
         //Own Solution
         /*if (Input.GetKey(KeyCode.LeftArrow))
@@ -199,5 +189,21 @@ public class Player : MonoBehaviour
         transform.position += offset;
 
 
+    }
+
+    public void EnemyMovement()
+    {
+        float playerEnemyDist = Vector3.Distance(enemyTransform.position, transform.position);
+        float enemySpeed = 2f;
+        print(playerEnemyDist);
+
+        if (playerEnemyDist < 8f)
+        {
+            enemyTransform.position += (transform.position- enemyTransform.position) * enemySpeed * Time.deltaTime;
+        }
+        if (playerEnemyDist < 1)
+        {
+            Destroy(gameObject);
+        }
     }
 }
