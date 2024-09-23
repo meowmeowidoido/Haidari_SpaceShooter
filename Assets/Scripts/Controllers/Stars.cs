@@ -6,9 +6,8 @@ using UnityEngine;
 public class Stars : MonoBehaviour
 {
     public List<Transform> starTransforms;
+    public float timer;
     public float drawingTime;
-    public int p=0;
-
     // Update is called once per frame
     void Update()
     {
@@ -17,28 +16,31 @@ public class Stars : MonoBehaviour
 
     public void DrawConstellation()
     {
-       
-
-
-        foreach (Transform t in starTransforms)
-        {
-
-            Vector2 points;
-
-
-            if (p<starTransforms.Count)
+        int i= 0;
+        timer+= Time.deltaTime;
+        drawingTime= timer/2;
+        Vector3 direction = (starTransforms[i + 1].position - starTransforms[i].position) * Time.deltaTime;
+            Vector3 endPoint;
+  
+                for(i=0; i<starTransforms.Count-1; i++)
             {
+             
+
+                endPoint = starTransforms[i+1].position + direction;
+            Debug.DrawLine(starTransforms[i].position , Vector3.Lerp(starTransforms[i].position, endPoint, drawingTime) , Color.white);
+
                
-               
-                 points = starTransforms[p].position;
+                if(i>=starTransforms.Count-1)
+            {
                 
-                Debug.DrawLine(transform.position, points, Color.blue);
-                p++;
             }
-           else {
-                p = 0;
+
+            }
+     
+                
+                
+                
             }
 
         }
-    }
-}
+

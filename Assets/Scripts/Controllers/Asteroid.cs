@@ -21,14 +21,15 @@ public class Asteroid : MonoBehaviour
 
     public void AsteroidMovement()
     {
- 
-        Vector3 direction = randomPoint - transform.position;
+
+        Vector3 direction = (randomPoint - transform.position) *Time.deltaTime;
         direction.Normalize();
         arrivalDistance = Vector3.Distance(transform.position, randomPoint);
         transform.position += direction* speed * Time.deltaTime;
         if (arrivalDistance < 1)
         {
             randomPoint = new Vector3(Random.Range(-20, 19), Random.Range(-11, 6));
+ 
         }
 
 
