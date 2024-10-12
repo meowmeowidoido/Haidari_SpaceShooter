@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
+    public GameObject missile;
 
     public float accelerationTime = 1f;
     public float decelerationTime = 1f;
@@ -32,7 +33,10 @@ public class Player : MonoBehaviour
     {
         playerRotation = 0;
         Vector3 moveDirection = Vector3.zero;
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            homingMissile();
+        }
         if (Input.GetKey(KeyCode.W))
         {
             moveDirection += transform.up;
@@ -81,5 +85,9 @@ public class Player : MonoBehaviour
             transform.Rotate(0, 0, playerRotation);
         }
 
+   public void homingMissile()
+    {
+      Instantiate(missile, transform.position, transform.rotation);
+    }
     }
 
