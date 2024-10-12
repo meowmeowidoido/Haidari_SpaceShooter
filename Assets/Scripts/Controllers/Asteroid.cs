@@ -4,34 +4,17 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    public float maxFloatDistance = 2;
+    public float moveSpeed;
     public float arrivalDistance;
-    public Vector3 randomPoint;
-    public float speed = 0.1f;
-    private void Start()
+    public float maxFloatDistance;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        
-        randomPoint= new Vector3(Random.Range(-20, 19), Random.Range(-11, 6));
-    }
-    private void Update()
-    {
-        
-        AsteroidMovement();
     }
 
-    public void AsteroidMovement()
+    // Update is called once per frame
+    void Update()
     {
-
-        Vector3 direction = (randomPoint - transform.position) *Time.deltaTime;
-        direction.Normalize();
-        arrivalDistance = Vector3.Distance(transform.position, randomPoint);
-        transform.position += direction* speed * Time.deltaTime;
-        if (arrivalDistance < 1)
-        {
-            randomPoint = new Vector3(Random.Range(-20, 19), Random.Range(-11, 6));
- 
-        }
-
-
     }
 }
