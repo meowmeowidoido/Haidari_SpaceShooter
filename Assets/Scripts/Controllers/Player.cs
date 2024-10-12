@@ -13,11 +13,13 @@ public class Player : MonoBehaviour
     public float decelerationTime = 1f;
     public float maxSpeed = 7.5f;
     public float turnSpeed = 180f;
+    public float playerRotation = 0f;
 
     private float acceleration;
     private float deceleration;
     private Vector3 currentVelocity;
     private float maxSpeedSqr;
+
 
     private void Start()
     {
@@ -28,40 +30,56 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        playerRotation = 0;
         Vector3 moveDirection = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
-            moveDirection += Vector3.up;
-        if (Input.GetKey(KeyCode.S))
-            moveDirection += Vector3.down;
-        
-        if (Input.GetKey(KeyCode.D))
-            moveDirection += Vector3.right;
-        if (Input.GetKey(KeyCode.A))
-            moveDirection += Vector3.left;
-
-        if (moveDirection.sqrMagnitude > 0)
         {
-            currentVelocity += Time.deltaTime * acceleration * moveDirection;
-            if (currentVelocity.sqrMagnitude > maxSpeedSqr)
-            {
-                currentVelocity = currentVelocity.normalized * maxSpeed;
-            }
+            moveDirection += transform.up;
         }
-        else
-        {
-            Vector3 velocityDelta = Time.deltaTime * deceleration * currentVelocity.normalized;
-            if (velocityDelta.sqrMagnitude > currentVelocity.sqrMagnitude)
+            if (Input.GetKey(KeyCode.S))
             {
-                currentVelocity = Vector3.zero;
+                moveDirection -= transform.up;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+           
+                playerRotation -= turnSpeed  * Time.deltaTime;
+            
+        }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+            
+                playerRotation = turnSpeed * Time.deltaTime;
+            
+            }
+      
+            if (moveDirection.sqrMagnitude > 0)
+            {
+                currentVelocity += Time.deltaTime * acceleration * moveDirection;
+                if (currentVelocity.sqrMagnitude > maxSpeedSqr)
+                {
+                    currentVelocity = currentVelocity.normalized * maxSpeed;
+                }
             }
             else
             {
-                currentVelocity -= velocityDelta;
+                Vector3 velocityDelta = Time.deltaTime * deceleration * currentVelocity.normalized;
+                if (velocityDelta.sqrMagnitude > currentVelocity.sqrMagnitude)
+                {
+                    currentVelocity = Vector3.zero;
+                }
+                else
+                {
+                    currentVelocity -= velocityDelta;
+                }
             }
+
+            transform.position += currentVelocity * Time.deltaTime;
+            transform.Rotate(0, 0, playerRotation);
         }
 
-        transform.position += currentVelocity * Time.deltaTime;
     }
 
-}
