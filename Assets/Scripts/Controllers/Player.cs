@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         Vector3 moveDirection = Vector3.zero;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            homingMissile();
+            HomingMissile();
         }
         if (Input.GetKey(KeyCode.W))
         {
@@ -48,15 +48,15 @@ public class Player : MonoBehaviour
 
             if (Input.GetKey(KeyCode.D))
             {
-           
-                playerRotation -= turnSpeed  * Time.deltaTime;
+
+            playerRotation -= turnSpeed;
             
         }
 
             if (Input.GetKey(KeyCode.A))
             {
-            
-                playerRotation = turnSpeed * Time.deltaTime;
+
+            playerRotation = turnSpeed;
             
             }
       
@@ -81,11 +81,13 @@ public class Player : MonoBehaviour
                 }
             }
 
-            transform.position += currentVelocity * Time.deltaTime;
-            transform.Rotate(0, 0, playerRotation);
+          transform.position += currentVelocity * Time.deltaTime;
+          transform.Rotate(0, 0, playerRotation * Time.deltaTime);
+        
+            
         }
 
-   public void homingMissile()
+   public void HomingMissile()
     {
       Instantiate(missile, transform.position, transform.rotation);
     }
