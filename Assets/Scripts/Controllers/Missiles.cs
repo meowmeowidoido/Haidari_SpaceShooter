@@ -77,6 +77,7 @@ public class Missiles : MonoBehaviour
         }
         if (distBetween < 1)
         {
+            //destroys missile and enemy game object after they come in contact.
             Destroy(gameObject);
             Destroy(enemy.gameObject);
         }
