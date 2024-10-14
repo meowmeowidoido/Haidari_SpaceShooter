@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Missiles : MonoBehaviour
 {
-    public float speed =3f;
+    public float speed =5f;
     Vector3 enemyPosition;
 
     // Update is called once per frame
@@ -15,6 +15,7 @@ public class Missiles : MonoBehaviour
 
     void Start()
     {
+        
        enemy = FindObjectOfType<Enemy>();
         if (enemy != null)
         {
@@ -55,20 +56,24 @@ public class Missiles : MonoBehaviour
 
             angleDifference = enemyAngle - missileAngle;
             angleDifference = AngleStandardizing(angleDifference);
-                if (missileAngle> enemyAngle)
-                { 
-                    transform.Rotate(0, 0, -angleDifference* -speed * Time.deltaTime);
+
+            if (angleDifference < 0)
+            {
+                if (missileAngle > enemyAngle)
+                {
+                    transform.Rotate(0, 0, -angleDifference * -speed * Time.deltaTime);
                 }
-             
-                
-                   if (missileAngle < enemyAngle)
+            }
+            else 
+                {
+                    if (missileAngle < enemyAngle)
                     {
                         transform.Rotate(0, 0, angleDifference * speed * Time.deltaTime);
                     }
-                
+                }
                 
             }
-            if (distBetween < 1)
+            if (distBetween < 0.5)
         {
            Destroy(gameObject);
            Destroy(enemy.gameObject);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //Variables
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -84,7 +85,6 @@ public class Player : MonoBehaviour
           transform.position += currentVelocity * Time.deltaTime;
           transform.Rotate(0, 0, playerRotation * Time.deltaTime);
         
-            
         }
 
    public void HomingMissile()
